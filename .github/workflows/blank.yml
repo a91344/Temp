@@ -75,7 +75,7 @@ jobs:
         # 设置id一般是为了其他step调用本步骤的输出
         id: prepare_release
         run: |
-          TAG_NAME=`echo $GITHUB_REF | cut -d / -f3`
+          TAG_NAME="v$(cat ./app/build.gradle | grep versionName | awk '{print $2}' | sed 's/"//g')"
           echo ::set-output name=tag_name::$TAG_NAME
       - name: Download build result for job apk
         # 只有上一步获取到tag_name才继续，下载前面apk任务里面的WhuHelper-debug.zip文件
