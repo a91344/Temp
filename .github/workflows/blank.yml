@@ -75,8 +75,11 @@ jobs:
       - name: Prepare Release
         # 设置id一般是为了其他step调用本步骤的输出
         id: prepare_release
+        env:
+          TZ: Asia/Shanghai
         run: |
           TAG_NAME="v$(cat ./app/build.gradle | grep versionName | awk '{print $2}' | sed 's/"//g')"
+          TAG_NAME="$TAG_NAME-$(date +"%Y年%m月%d日%H时%M分%S秒")用户端-正式"
           echo ::set-output name=tag_name::$TAG_NAME
       - name: Download build result for job apk
         # 只有上一步获取到tag_name才继续，下载前面apk任务里面的WhuHelper-debug.zip文件
@@ -89,7 +92,7 @@ jobs:
       - shell: bash
         # 手动更改apk名字
         run: |
-          mv app-release-unsigned.apk  app-debug-${{steps.prepare_release.outputs.tag_name}}.apk 
+          mv app-release-unsigned.apk  ${{steps.prepare_release.outputs.tag_name}}.apk 
       # 发布release，版本号是用户git push的tag里面的版本号，发布的只有代码压缩包（与手动默认发布一致）
       - name: Create Release
         id: create_release
