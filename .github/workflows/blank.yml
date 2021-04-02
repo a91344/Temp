@@ -88,7 +88,7 @@ jobs:
       - shell: bash
         # 手动更改apk名字
         run: |
-          mv app-debug.apk  app-debug-${{steps.prepare_release.outputs.tag_name}}.apk 
+          mv app-release-unsigned.apk  app-debug-${{steps.prepare_release.outputs.tag_name}}.apk 
       # 发布release，版本号是用户git push的tag里面的版本号，发布的只有代码压缩包（与手动默认发布一致）
       - name: Create Release
         id: create_release
