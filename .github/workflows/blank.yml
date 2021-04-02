@@ -71,6 +71,7 @@ jobs:
     steps:
       # 自己编写的shell命令
       # 学习如何设置单个任务的输出来被其他任务调用
+      - uses: actions/checkout@v2
       - name: Prepare Release
         # 设置id一般是为了其他step调用本步骤的输出
         id: prepare_release
