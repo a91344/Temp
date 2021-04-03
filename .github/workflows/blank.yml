@@ -52,8 +52,9 @@ jobs:
         id: generate
         run: |
           bash ./gradlew aR --stacktrace
-          path=$(find ./ -regex ".+release.+.apk$")
-          echo ::set-output name=path::$path
+          file_path=$(find ./ -regex ".+release.+.apk$")
+          echo $file_path
+          echo ::set-output name=path::$file_path
       # 利用upload-artifact实现build结果的保存（可以在Actions的控制台下载压缩文件）
       - name: Upload APK
         uses: actions/upload-artifact@v2
