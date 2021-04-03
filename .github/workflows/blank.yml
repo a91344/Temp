@@ -105,7 +105,7 @@ jobs:
           # 设置时区，默认是格林尼治时间
           # TZ: Asia/Shanghai
         with:
-          tag_name: ${{steps.prepare_release.outputs.tag_name}}
+          # tag_name: ${{steps.prepare_release.outputs.tag_name}}
           release_name: Release ${{steps.prepare_release.outputs.tag_name}} by zfb
           draft: false
           prerelease: false
