@@ -104,7 +104,7 @@ jobs:
         id: create_release
         # 只有上一步获取到tag_name才继续
         if: steps.prepare_release.outputs.tag_name
-        uses: actions/create-release@v1
+        uses: actions/update-release@v1
         env:
           # GitHub 会自动创建 GITHUB_TOKEN 密码以在工作流程中使用
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
