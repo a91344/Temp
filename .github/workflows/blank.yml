@@ -82,9 +82,11 @@ jobs:
         id: prepare_release
         env:
           TZ: Asia/Shanghai
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           TAG_NAME="v$(cat ./app/build.gradle | grep versionName | awk '{print $2}' | sed 's/"//g')"
           FILE_NAME="$TAG_NAME-$(date +"%Y年%m月%d日%H时%M分%S秒")用户端-正式"
+          git push :refs/tags/$TAG_NAME
           echo ::set-output name=tag_name::$TAG_NAME
           echo ::set-output name=file_name::$FILE_NAME
       - name: Download build result for job apk
@@ -104,7 +106,7 @@ jobs:
         id: create_release
         # 只有上一步获取到tag_name才继续
         if: steps.prepare_release.outputs.tag_name
-        uses: actions/update-release@v1
+        uses: actions/create-release@v1
         env:
           # GitHub 会自动创建 GITHUB_TOKEN 密码以在工作流程中使用
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
